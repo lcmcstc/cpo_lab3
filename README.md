@@ -47,7 +47,7 @@
 
    -. match
 
-      ```
+      ```python
       regex = '[0-9]+'
       text = '1324354657'
       self.assertEqual(match(regex, text), (0, len(text)))
@@ -55,7 +55,7 @@
 
    -. search
 
-      ```
+      ```python
       regex = '[0-9]+'
       text = 'hello1324354657itmo'
       self.assertEqual(search(regex, text), (5, 15))
@@ -63,7 +63,7 @@
 
    -. sub
 
-      ```
+      ```python
       regex = r' #.*$'
       text = '2004-959-559 # this is a phone number'
       self.assertEqual(sub(regex, "", text, 1), '2004-959-559')
@@ -71,7 +71,7 @@
 
    -. split
 
-      ```
+      ```python
       regex = r'\w+'
       text = 'wxx，wxx，wxx，wxx，wxx'
       self.assertEqual(split(regex, text), ['', '，', '，', '，', '，', ''])
