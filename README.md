@@ -7,13 +7,13 @@
    **Use python to develop a library to implement Regular expression,
    which must meet the following conditions:**
 
-   1. Sub variants define which construction you should support:
+   -. Sub variants define which construction you should support:
       \w, \s, \d, \, ^, ., $, *, +, [], [^], {n}, {min,}, {,max}, {min,max}.
 
-   2. Support functions: match, search, sub, split.
-   3. Visualization as a finite state machine (state diagram and table).
-   4. You should use default Python logging module to make interpreter work transparent.
-   5. Provide complex examples, such as a time parsing, JSON parsing and so on.
+   -. Support functions: match, search, sub, split.
+   -. Visualization as a finite state machine (state diagram and table).
+   -. You should use default Python logging module to make interpreter work transparent.
+   -. Provide complex examples, such as a time parsing, JSON parsing and so on.
 
    **To implement this lab,which must to do:**
 
