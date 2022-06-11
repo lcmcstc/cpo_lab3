@@ -4,79 +4,79 @@
 
 ## Synopsis
 
-   **Use python to develop a library to implement Regular expression,
-   which must meet the following conditions:**
+**Use python to develop a library to implement Regular expression,
+which must meet the following conditions:**
 
-   - Sub variants define which construction you should support:
-      \w, \s, \d, \, ^, ., $, *, +, [], [^], {n}, {min,}, {,max}, {min,max}.
+- Sub variants define which construction you should support:
+  \w, \s, \d, \, ^, ., $, *, +, [], [^], {n}, {min,}, {,max}, {min,max}.
 
-   - Support functions: match, search, sub, split.
-   - Visualization as a finite state machine (state diagram and table).
-   - You should use default Python logging module to make interpreter work transparent.
-   - Provide complex examples, such as a time parsing, JSON parsing and so on.
+- Support functions: match, search, sub, split.
+- Visualization as a finite state machine (state diagram and table).
+- You should use default Python logging module to make interpreter work transparent.
+- Provide complex examples, such as a time parsing, JSON parsing and so on.
 
-   **To implement this lab,which must to do:**
+**To implement this lab,which must to do:**
 
-   - Design Input Language,make a discrete-event model of computation.
-   - On the basis of discrete_event,build the packaged NFA.
-   - Parsed regular expressions.
-   - The parsed regular expression is used to build the NFA.
-   - Using NFA, the regular expression of the function match, search, sub and split
-   - After finishing programming, you need to verify your library
-   by unit tests and property-based tests.
+- Design Input Language,make a discrete-event model of computation.
+- On the basis of discrete_event,build the packaged NFA.
+- Parsed regular expressions.
+- The parsed regular expression is used to build the NFA.
+- Using NFA, the regular expression of the function match, search, sub and split
+- After finishing programming, you need to verify your library
+by unit tests and property-based tests.
 
-   **The following functions should be implemented:**
+**The following functions should be implemented:**
 
-   - match(Try to match a pattern from the beginning of the string.
-   If the match is not successful at the beginning, match() returns none).
-   - search(Scan the entire string and return the first successful match).
-   - sub(Replace matches in string).
-   - split(The method divides the string according to the substring
-   that can be matched and returns the list).
+- match(Try to match a pattern from the beginning of the string.
+If the match is not successful at the beginning, match() returns none).
+- search(Scan the entire string and return the first successful match).
+- sub(Replace matches in string).
+- split(The method divides the string according to the substring
+that can be matched and returns the list).
 
 ## Contribution summary for each group member
 
-   **Li Changmenchen**: Complete the common and discrete_event and
-   regex_fa_construction and the tests of discrete_event and
-   regex_fa_construction.Finish part of the report.
+**Li Changmenchen**: Complete the common and discrete_event and
+regex_fa_construction and the tests of discrete_event and
+regex_fa_construction.Finish part of the report.
 
-   **Li Xiao**: Complete the regex_parser and regex_to_nfa and regex_lib
-   and the tests of them.Finish part of the report.
+**Li Xiao**: Complete the regex_parser and regex_to_nfa and regex_lib
+and the tests of them.Finish part of the report.
 
 ## Work demonstration
 
-   - match
-   
-  ```python
-  regex = '[0-9]+'
-  text = '1324354657'
-  self.assertEqual(match(regex, text), (0, len(text)))
-  ```
+- match
 
-   - search
+```python
+regex = '[0-9]+'
+text = '1324354657'
+self.assertEqual(match(regex, text), (0, len(text)))
+```
 
-  ```python
-  regex = '[0-9]+'
-  text = 'hello1324354657itmo'
-  self.assertEqual(search(regex, text), (5, 15))
-  ```
+- search
 
-  - sub
+```python
+regex = '[0-9]+'
+text = 'hello1324354657itmo'
+self.assertEqual(search(regex, text), (5, 15))
+```
 
-  ```python
-  regex = r' #.*$'
-  text = '2004-959-559 # this is a phone number'
-  self.assertEqual(sub(regex, "", text, 1), '2004-959-559')
-  ```
+- sub
 
-   - split
+```python
+regex = r' #.*$'
+text = '2004-959-559 # this is a phone number'
+self.assertEqual(sub(regex, "", text, 1), '2004-959-559')
+```
 
-  ```python
-  regex = r'\w+'
-  text = 'wxx，wxx，wxx，wxx，wxx'
-  self.assertEqual(split(regex, text), ['', '，', '，', '，', '，', ''])
-  self.assertEqual(split(regex, text, 1), ['', '，wxx，wxx，wxx，wxx'])
-  ```
+- split
+
+```python
+regex = r'\w+'
+text = 'wxx，wxx，wxx，wxx，wxx'
+self.assertEqual(split(regex, text), ['', '，', '，', '，', '，', ''])
+self.assertEqual(split(regex, text, 1), ['', '，wxx，wxx，wxx，wxx'])
+```
 
 ## Conclusion
 
