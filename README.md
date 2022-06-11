@@ -9,10 +9,11 @@
 
    1. Sub variants define which construction you should support:
       \w, \s, \d, \, ^, ., $, *, +, [], [^], {n}, {min,}, {,max}, {min,max}.
+
    2. Support functions: match, search, sub, split.
    3. Visualization as a finite state machine (state diagram and table).
    4. You should use default Python logging module to make interpreter work transparent.
-   5. Should provide complex examples,such as a time parsing, JSON parsing and so on.
+   5. Provide complex examples, such as a time parsing, JSON parsing and so on.
 
    **To implement this lab,which must to do:**
 
@@ -21,7 +22,7 @@
    3. Parsed regular expressions.
    4. The parsed regular expression is used to build the NFA.
    5. Using NFA, the regular expression of the function match, search, sub and split
-   6.  After finishing programming, you need to verify your library
+   6. After finishing programming, you need to verify your library
    by unit tests and property-based tests.
 
    **The following functions should be implemented:**
@@ -38,7 +39,7 @@
    **Li Changmenchen**: Complete the common and discrete_event and
    regex_fa_construction and the tests of discrete_event and
    regex_fa_construction.Finish part of the report.
-   
+
    **Li Xiao**: Complete the regex_parser and regex_to_nfa and regex_lib
    and the tests of them.Finish part of the report.
 
@@ -90,8 +91,8 @@
   Finally, using the NFA corresponding to the regular expression
   to carry out string matching, to achieve match, search, sub, split function.
 
-  Regex_FA_Construction is an NFA constructor class repackaged on the basis of discrete_event model,
-  which contains the operation of NFA nodes and matching results.
+  Regex_FA_Construction is an NFA constructor class repackaged on the basis of
+  discrete_event model, which contains the operation of NFA nodes and matching results.
 
   The regex_parser parses regular expressions, dividing them into operators and operands.
 
@@ -99,4 +100,5 @@
   the Regex_Fa_Construction NFA constructor class implementation
   to convert the regular expression to the corresponding NFA.
 
-  Regex_lib implements match, search, sub, and split functions using the corresponding NFA of regular expressions.
+  Regex_lib implements match, search, sub, and split functions
+  using the corresponding NFA of regular expressions.
