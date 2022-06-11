@@ -22,7 +22,7 @@ which must meet the following conditions:**
 - Parsed regular expressions.
 - The parsed regular expression is used to build the NFA.
 - Using NFA, the regular expression of the function match, search, sub and split.
-- After finishing programming, you need to verify your library 
+- After finishing programming, you need to verify your library
 - by unit tests and property-based tests.
 
 **The following functions should be implemented:**
