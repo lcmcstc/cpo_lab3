@@ -6,7 +6,8 @@ from typing import Tuple
 @arg_type(0, str)
 def regex_to_tokens(regex: str) -> list:
     """ Convert the regular expression to a token list.
-    By analyzing the token list, we can get the semantics of metacharacter in regular expression. """
+    By analyzing the token list,
+    we can get the semantics of metacharacter in regular expression. """
 
     tokens = []  # type 0 denotes operators, type 1 denotes normal operands
     lst = list(regex)
@@ -21,7 +22,9 @@ def regex_to_tokens(regex: str) -> list:
         elif lst[i] == '[':
             inc, d = process_set(regex[i:])
             i += inc
-        elif lst[i] == '*' or lst[i] == '+' or lst[i] == '^' or lst[i] == '$' or lst[i] == '(' or lst[i] == ')':
+        elif lst[i] == '*' or lst[i] == '+' \
+                or lst[i] == '^' or lst[i] == '$' \
+                or lst[i] == '(' or lst[i] == ')':
             d = {'value': lst[i], 'type': 0, 'kind': Kind.NORMAL}
         elif lst[i] == '{':
             inc, d = process_range(regex[i:])
@@ -41,8 +44,12 @@ def add_concat(tokens: list) -> None:
     concat = {'value': 'concat', 'type': 0, 'kind': Kind.CONCAT}
     con_index = []
     for i in (range(len(tokens) - 1)):
-        if (is_repeat(tokens[i]) and is_left_bracket(tokens[i + 1])) or \
-                (is_repeat(tokens[i]) and tokens[i + 1].get('type') == 1):
+        if (is_repeat(tokens[i])
+            and
+            is_left_bracket(tokens[i + 1])) or \
+                (is_repeat(tokens[i])
+                 and
+                 tokens[i + 1].get('type') == 1):
             con_index.append(i + 1)
         elif (is_right_bracket(tokens[i]) and is_left_bracket(tokens[i + 1])) or \
                 (is_right_bracket(tokens[i]) and tokens[i + 1].get('type') == 1):
