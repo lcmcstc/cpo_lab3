@@ -2,7 +2,7 @@
 
    **variant description**: Regular expression
 
-## Synopsis
+## laboratory work description
 
 **Use python to develop a library to implement Regular expression,
 which must meet the following conditions:**
@@ -33,7 +33,7 @@ which must meet the following conditions:**
 - sub(Replace matches in string).
 - split
 
-## Contribution summary for each group member
+## Contribution
 
 **Li Changmenchen**: Complete the common and discrete_event and
 regex_fa_construction and the tests of discrete_event and
@@ -76,6 +76,18 @@ text = 'wxx，wxx，wxx，wxx，wxx'
 self.assertEqual(split(regex, text), ['', '，', '，', '，', '，', ''])
 self.assertEqual(split(regex, text, 1), ['', '，wxx，wxx，wxx，wxx'])
 ```
+
+## Changelog
+
+- 12.06.2022
+  - fixed bug
+- 11.06.2022
+  - Update Readme.md 
+- 10.06.2022
+  - Create Readme.md
+- 06.06.2022
+  - Initial commit
+
 
 ## Conclusion
 
