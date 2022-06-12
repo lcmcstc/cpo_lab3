@@ -287,15 +287,15 @@ class RegexFaConstruction:
                 elif token.get('type') == Kind.ALPHA_RANGE:
                     if not text[0].isalpha():
                         continue
-                    l, r = token.get(Kind.RANGE)[0], token.get(Kind.RANGE)[1]
-                    if l <= text[0] <= r:
+                    l0, r = token.get(Kind.RANGE)[0], token.get(Kind.RANGE)[1]
+                    if l0 <= text[0] <= r:
                         return (text[1:] if len(text)
                                 else '') if not negative else None
                 else:
                     if not text[0].isdigit():
                         continue
-                    l, r = token.get(Kind.RANGE)[0], token.get(Kind.RANGE)[1]
-                    if l <= int(text[0]) <= r:
+                    l0, r = token.get(Kind.RANGE)[0], token.get(Kind.RANGE)[1]
+                    if l0 <= int(text[0]) <= r:
                         return (text[1:] if len(text)
                                 else '') if not negative else None
             return (text[1:] if len(text) else '') if negative else None

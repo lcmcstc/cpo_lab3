@@ -61,7 +61,6 @@ def sub(regex: str, repl: str, text: str, count: int = 0) -> str:
 
 @arg_type([0, 1], [str, str])
 def split(regex: str, text: str, maxsplit: int = 0) -> list:
-    """ The method divides the string according to the substring that can be matched and returns the list """
     nfa = regex_to_nfa(regex)
     res_lst = []
     t_count = maxsplit if maxsplit != 0 else len(text)
