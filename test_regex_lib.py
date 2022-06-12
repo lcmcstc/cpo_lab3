@@ -21,7 +21,7 @@ class RegexLibTest(unittest.TestCase):
         regex = '[0-9]+'
         text = 'hello13506836172itmo'
         self.assertRaises(TypeError, lambda: search(0, 1))
-        self.assertEqual(search(regex, text), (5, 15))
+        self.assertEqual(search(regex, text), (5, 16))
         text = 'hello itmo'
         self.assertEqual(search(regex, text), None)
         regex = '^hello'
