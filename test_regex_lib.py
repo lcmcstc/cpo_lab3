@@ -57,11 +57,20 @@ class RegexLibTest(unittest.TestCase):
         self.assertEqual(text[d[0]:d[1]], '23:58:01')
 
     def test_email_parsing(self):
-        json_text = r'{"code": 200, "message": "SUCCESS", "email": "lcmc@hdu.edu.cn", "result": { "gender": ' \
-                    r'"男","patientId": "20210629-A-0001","svsPic": [{"dziURL": "/0_0.svs.dzi","name": "0.dzi"},{' \
-                    r'"dziURL": "/0_1.svs.dzi","name": "1.dzi"}],"minority": "汉族","assistantExaminations": [{' \
-                    r'"id": 107,"firstVisitId": 11805506,"time": "2022-05-14","description": "懂法发动","uri": null,' \
-                    r'"type": null,"infoType": "assistantExaminations"},'
+        json_text = r'{"code": 200, "message": "SUCCESS",' \
+                    r' "email": "lcmc@hdu.edu.cn", ' \
+                    r'"result": { "gender": ' \
+                    r'"男","patientId": "20210629-A-0001",' \
+                    r'"svsPic": [{"dziURL": "/0_0.svs.dzi",' \
+                    r'"name": "0.dzi"},{' \
+                    r'"dziURL": "/0_1.svs.dzi","name": "1.dzi"}]' \
+                    r',"minority": "汉族",' \
+                    r'"assistantExaminations": [{' \
+                    r'"id": 107,' \
+                    r'"firstVisitId": 11805506,"time": ' \
+                    r'"2022-05-14","description": "懂法发动","uri": null,' \
+                    r'"type": null,' \
+                    r'"infoType": "assistantExaminations"},'
         regex = r'[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+'
         d = search(regex, json_text)
         self.assertEqual(json_text[d[0]:d[1]], 'lcmc@hdu.edu.cn')
