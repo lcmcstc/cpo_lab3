@@ -6,8 +6,8 @@ from common import arg_callable, arg_type
 
 logging.basicConfig(
     level=logging.DEBUG,
-    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
-
+    format='%(asctime)s - %(filename)s' +
+           '[line:%(lineno)d] - %(levelname)s: %(message)s')
 
 event = namedtuple("event", "clock node var val")
 source_event = namedtuple("source_event", "var val latency")
@@ -103,7 +103,7 @@ class DiscreteEvent(object):
                     '_source_events2events. event: {}'.format(
                         event(
                             clock=source_latency +
-                            target_latency,
+                                  target_latency,
                             node=None,
                             var=se.var,
                             val=se.val)))
@@ -119,8 +119,8 @@ class DiscreteEvent(object):
                         '_source_events2events. event: {}'.format(
                             event(
                                 clock=clock +
-                                source_latency +
-                                target_latency,
+                                      source_latency +
+                                      target_latency,
                                 node=node,
                                 var=se.var,
                                 val=se.val)))
