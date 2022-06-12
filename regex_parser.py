@@ -142,7 +142,7 @@ def process_set(substr: str) -> Tuple[int, dict]:
     return increment, d
 
 
-@arg_type(0, str)
+# @arg_type(0, str)
 def charset_parser(charset: str) -> list:
     """ Analyze the string in '[]' and convert it to token list """
     set_token_lst = []
