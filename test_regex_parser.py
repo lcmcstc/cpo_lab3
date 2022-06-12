@@ -23,7 +23,8 @@ class RegexParserTest(unittest.TestCase):
         inc, d = process_set(r'[a-z\w0-9]')
         act_d = {'value': '[a-z\\w0-9]', 'type': 1, 'kind': 'charset',
                  'charset': [{'type': 'alpha_range', 'range': ['a', 'z']},
-                             {'type': 'trans', 'value': 'w'}, {'type': 'digit_range', 'range': [0, 9]}]}
+                             {'type': 'trans', 'value': 'w'},
+                             {'type': 'digit_range', 'range': [0, 9]}]}
         self.assertEqual(d, act_d)
         self.assertRaises(TypeError, lambda: process_set(None))
 
@@ -67,22 +68,27 @@ class RegexParserTest(unittest.TestCase):
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
                       {'value': '[^0-9]', 'type': 1, 'kind': 'neg-charset',
                        'neg-charset': [{'type': 'normal', 'value': '^'},
-                                       {'type': 'digit_range', 'range': [0, 9]}]},
+                                       {'type': 'digit_range', 'range':
+                                           [0, 9]}]},
                       {'value': '+', 'type': 0, 'kind': 'normal'},
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
                       {'value': 'w', 'type': 1, 'kind': 'trans'},
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
                       {'value': 's', 'type': 1, 'kind': 'trans'},
-                      {'value': '{2,8}', 'type': 0, 'kind': 'range', 'range': [2, 8]},
-                      {'value': '{2,}', 'type': 0, 'kind': 'range', 'range': [2, -1]},
+                      {'value': '{2,8}', 'type': 0, 'kind': 'range', 'range':
+                          [2, 8]},
+                      {'value': '{2,}', 'type': 0, 'kind': 'range', 'range':
+                          [2, -1]},
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
                       {'value': 'a', 'type': 1, 'kind': 'normal'},
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
                       {'value': 'c', 'type': 1, 'kind': 'normal'},
-                      {'value': '{,8}', 'type': 0, 'kind': 'range', 'range': [0, 8]},
+                      {'value': '{,8}', 'type': 0, 'kind': 'range', 'range':
+                          [0, 8]},
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
                       {'value': 'b', 'type': 1, 'kind': 'normal'},
-                      {'value': '{6}', 'type': 0, 'kind': 'range', 'range': [6, 6]}]
+                      {'value': '{6}', 'type': 0, 'kind': 'range', 'range':
+                          [6, 6]}]
 
         self.assertEqual(tokens, act_tokens)
         self.assertRaises(TypeError, lambda: regex_to_tokens(None))
@@ -92,7 +98,8 @@ class RegexParserTest(unittest.TestCase):
                   {'value': 'b', 'type': 1, 'kind': 'normal'},
                   {'value': '[^0-9]', 'type': 1, 'kind': 'neg-charset',
                    'neg-charset': [{'type': 'normal', 'value': '^'},
-                                   {'type': 'digit_range', 'range': [0, 9]}]}]
+                                   {'type': 'digit_range', 'range':
+                                       [0, 9]}]}]
         add_concat(tokens)
         act_tokens = [{'value': 'a', 'type': 1, 'kind': 'normal'},
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
@@ -100,7 +107,8 @@ class RegexParserTest(unittest.TestCase):
                       {'value': 'concat', 'type': 0, 'kind': 'concat'},
                       {'value': '[^0-9]', 'type': 1, 'kind': 'neg-charset',
                        'neg-charset': [{'type': 'normal', 'value': '^'},
-                                       {'type': 'digit_range', 'range': [0, 9]}]}]
+                                       {'type': 'digit_range', 'range':
+                                           [0, 9]}]}]
         self.assertEqual(tokens, act_tokens)
         self.assertRaises(TypeError, lambda: add_concat(None))
 
