@@ -102,8 +102,7 @@ class DiscreteEvent(object):
                 logging.info(
                     '_source_events2events. event: {}'.format(
                         event(
-                            clock=source_latency +
-                                  target_latency,
+                            clock=source_latency + target_latency,
                             node=None,
                             var=se.var,
                             val=se.val)))
@@ -118,9 +117,7 @@ class DiscreteEvent(object):
                     logging.info(
                         '_source_events2events. event: {}'.format(
                             event(
-                                clock=clock +
-                                      source_latency +
-                                      target_latency,
+                                clock=clock + source_latency + target_latency,
                                 node=node,
                                 var=se.var,
                                 val=se.val)))
