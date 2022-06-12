@@ -51,10 +51,13 @@ def add_concat(tokens: list) -> None:
                  and
                  tokens[i + 1].get('type') == 1):
             con_index.append(i + 1)
-        elif (is_right_bracket(tokens[i]) and is_left_bracket(tokens[i + 1])) or \
-                (is_right_bracket(tokens[i]) and tokens[i + 1].get('type') == 1):
+        elif (is_right_bracket(tokens[i])
+              and is_left_bracket(tokens[i + 1])) or \
+                (is_right_bracket(tokens[i])
+                 and tokens[i + 1].get('type') == 1):
             con_index.append(i + 1)
-        elif (tokens[i].get('type') == 1 and is_left_bracket(tokens[i + 1])) or \
+        elif (tokens[i].get('type') == 1
+              and is_left_bracket(tokens[i + 1])) or \
                 (tokens[i].get('type') == 1 and tokens[i + 1].get('type') == 1):
             con_index.append(i + 1)
     for i in reversed(con_index):
