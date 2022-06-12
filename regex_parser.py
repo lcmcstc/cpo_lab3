@@ -162,13 +162,17 @@ def charset_parser(charset: str) -> list:
             elif charset[i + 1] in ['w', 's', 'd']:
                 d = {'type': Kind.TRANS, 'value': charset[i + 1]}
                 i += 1
-        elif charset[i].isalpha() and i + 2 < len(charset) and charset[i + 1] == '-':
+        elif charset[i].isalpha() \
+                and i + 2 < len(charset)\
+                and charset[i + 1] == '-':
             alp_nfa.execute(charset[i:i + 3])
             if alp_nfa.is_matched():
                 d = {'type': 'alpha_' + Kind.RANGE,
                      Kind.RANGE: [charset[i], charset[i + 2]]}  # type: ignore
                 i += 2
-        elif charset[i].isdigit() and i + 2 < len(charset) and charset[i + 1] == '-':
+        elif charset[i].isdigit() \
+                and i + 2 < len(charset) \
+                and charset[i + 1] == '-':
             dig_nfa.execute(charset[i:i + 3])
             if dig_nfa.is_matched():
                 d = {'type': 'digit_' + Kind.RANGE,
