@@ -61,7 +61,9 @@ class RegexFaConstructionTest(unittest.TestCase):
     def test_add_da_node(self):
         nfa = RegexFaConstruction('nfa')
         nfa.add_da_node(nfa.input_port, nfa.output_port)
-        self.assertRaises(TypeError, lambda: nfa.add_da_node(nfa.input_port, 1))
+        self.assertRaises(
+            TypeError, lambda: nfa.add_da_node(
+                nfa.input_port, 1))
         nfa.execute('a')
         self.assertEqual(nfa.is_matched(), True)
         nfa.execute('1')
@@ -132,7 +134,11 @@ class RegexFaConstructionTest(unittest.TestCase):
     def test_add_charset_node(self):
         nfa = RegexFaConstruction('nfa')
         charset = charset_parser(r'\sa-zA-Z5-9')
-        nfa.add_charset_node(nfa.input_port, nfa.output_port, charset, negative=False)
+        nfa.add_charset_node(
+            nfa.input_port,
+            nfa.output_port,
+            charset,
+            negative=False)
         nfa.execute('a')
         self.assertEqual(nfa.is_matched(), True)
         nfa.execute('z')

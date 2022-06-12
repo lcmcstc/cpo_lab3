@@ -1,12 +1,13 @@
+import copy
+from collections import OrderedDict, namedtuple
 import logging
 from typing import Tuple, Union
 from common import arg_callable, arg_type
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 
-from collections import OrderedDict, namedtuple
-import copy
 
 event = namedtuple("event", "clock node var val")
 source_event = namedtuple("source_event", "var val latency")
@@ -22,7 +23,8 @@ class Node(object):
         self.outputs: OrderedDict = OrderedDict()
 
     def __repr__(self):
-        return "{} inputs: {} outputs: {}".format(self.name, self.inputs, self.outputs)
+        return "{} inputs: {} outputs: {}".format(
+            self.name, self.inputs, self.outputs)
 
     @arg_type(1, str)
     def input(self, name: str, latency: int = 1) -> None:
@@ -49,7 +51,7 @@ class Node(object):
             if not isinstance(res, tuple):
                 res_tuple = (res,)
                 for i in range(len(self.outputs) - 1):
-                    res_tuple = res_tuple + (res,) # type: ignore
+                    res_tuple = res_tuple + (res,)  # type: ignore
 
             for var, val in zip(self.outputs, res_tuple):
                 latency = self.outputs[var]
@@ -84,7 +86,8 @@ class DiscreteEvent(object):
         return node
 
     @arg_type(2, int)
-    def _source_events2events(self, source_events: Union[list, tuple], clock: int) -> list:
+    def _source_events2events(
+            self, source_events: Union[list, tuple], clock: int) -> list:
         logging.info('_source_events2events. clock: {}'.format(clock))
         events = []
         for se in source_events:
@@ -96,8 +99,14 @@ class DiscreteEvent(object):
                     node=None,
                     var=se.var,
                     val=se.val))
-                logging.info('_source_events2events. event: {}'.format(event(clock=source_latency + target_latency,
-                                                                             node=None, var=se.var, val=se.val)))
+                logging.info(
+                    '_source_events2events. event: {}'.format(
+                        event(
+                            clock=source_latency +
+                            target_latency,
+                            node=None,
+                            var=se.var,
+                            val=se.val)))
             for node in self.nodes:
                 if se.var in node.inputs:
                     target_latency = node.inputs[se.var]
@@ -107,8 +116,14 @@ class DiscreteEvent(object):
                         var=se.var,
                         val=se.val))
                     logging.info(
-                        '_source_events2events. event: {}'.format(event(clock=clock + source_latency + target_latency,
-                                                                        node=node, var=se.var, val=se.val)))
+                        '_source_events2events. event: {}'.format(
+                            event(
+                                clock=clock +
+                                source_latency +
+                                target_latency,
+                                node=node,
+                                var=se.var,
+                                val=se.val)))
         return events
 
     @arg_type(1, list)
@@ -125,7 +140,10 @@ class DiscreteEvent(object):
             env[var] = None
         return env
 
-    def execute(self, *source_events: Union[tuple, list], limit: int = 10000) -> dict:
+    def execute(self,
+                *source_events: Union[tuple,
+                                      list],
+                limit: int = 10000) -> dict:
         events: list = []
         state = self._state_initialize()
         state_record = self._state_initialize()
@@ -135,7 +153,8 @@ class DiscreteEvent(object):
             limit -= 1
             new_events = self._source_events2events(source_events, clock)
             events.extend(new_events)
-            if len(events) == 0: break
+            if len(events) == 0:
+                break
             event, events = self._pop_next_event(events)
             state.clear()
             state[event.var] = event.val
@@ -144,13 +163,15 @@ class DiscreteEvent(object):
             if event.node:
                 source_events = event.node.activate(state)
             else:
-                source_events = [] # type: ignore
+                source_events = []  # type: ignore
             logging.info('execute. state: {}'.format(state))
             state_record.update(state)
             self.state_history.append((clock, copy.copy(state_record)))
             self.event_history.append(event)
-            if 'Output' in state_record and state_record['Output'] == '': break
-        if limit == 0: print("limit reached")
+            if 'Output' in state_record and state_record['Output'] == '':
+                break
+        if limit == 0:
+            print("limit reached")
         return state_record
 
     def visualize(self) -> str:
@@ -168,10 +189,12 @@ class DiscreteEvent(object):
                 if v in self.inputs:
                     res.append('  {} -> n_{};'.format(v, i))
             for j, n2 in enumerate(self.nodes):
-                if i == j: continue
+                if i == j:
+                    continue
                 for v in n.inputs:
                     if v in n2.outputs:
-                        res.append('  n_{} -> n_{}[label="{}"];'.format(j, i, v))
+                        res.append(
+                            '  n_{} -> n_{}[label="{}"];'.format(j, i, v))
             for v in n.outputs:
                 if v in self.outputs:
                     res.append('  n_{} -> {};'.format(i, v))

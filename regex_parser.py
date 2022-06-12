@@ -120,7 +120,8 @@ def process_trans(character: str) -> dict:
 def process_set(substr: str) -> Tuple[int, dict]:
     """ Process characters in '[]' """
     increment = 0
-    while substr[increment] != ']': increment += 1
+    while substr[increment] != ']':
+        increment += 1
     if substr[1] == '^':
         d = {'value': substr[0:increment + 1], 'type': 1, 'kind': Kind.NEG_SET,
              Kind.NEG_SET: charset_parser(substr[1:increment])}
@@ -157,12 +158,15 @@ def charset_parser(charset: str) -> list:
         elif charset[i].isalpha() and i + 2 < len(charset) and charset[i + 1] == '-':
             alp_nfa.execute(charset[i:i + 3])
             if alp_nfa.is_matched():
-                d = {'type': 'alpha_' + Kind.RANGE, Kind.RANGE: [charset[i], charset[i + 2]]} # type: ignore
+                d = {'type': 'alpha_' + Kind.RANGE,
+                     Kind.RANGE: [charset[i], charset[i + 2]]}  # type: ignore
                 i += 2
         elif charset[i].isdigit() and i + 2 < len(charset) and charset[i + 1] == '-':
             dig_nfa.execute(charset[i:i + 3])
             if dig_nfa.is_matched():
-                d = {'type': 'digit_' + Kind.RANGE, Kind.RANGE: [int(charset[i]), int(charset[i + 2])]} # type: ignore
+                d = {'type': 'digit_' + Kind.RANGE,
+                     Kind.RANGE: [int(charset[i]),
+                                  int(charset[i + 2])]}  # type: ignore
                 i += 2
         else:
             d = {'type': Kind.NORMAL, 'value': charset[i]}
@@ -175,7 +179,8 @@ def charset_parser(charset: str) -> list:
 def process_range(substr: str) -> Tuple[int, dict]:
     """ Process repeated operation with '{}' """
     increment = 0
-    while substr[increment] != '}': increment += 1
+    while substr[increment] != '}':
+        increment += 1
 
     m1 = RegexFaConstruction('{n}')
     m1.add_normal_node(m1.input_port, 'n1', '{')
@@ -212,9 +217,11 @@ def process_range(substr: str) -> Tuple[int, dict]:
              Kind.RANGE: [int(substr[1]), int(substr[1])]}
     elif m2.is_matched():
         # -1 denotes infinity
-        d = {'value': substr[0:increment + 1], 'type': 0, 'kind': Kind.RANGE, Kind.RANGE: [int(substr[1]), -1]}
+        d = {'value': substr[0:increment + 1], 'type': 0,
+             'kind': Kind.RANGE, Kind.RANGE: [int(substr[1]), -1]}
     elif m3.is_matched():
-        d = {'value': substr[0:increment + 1], 'type': 0, 'kind': Kind.RANGE, Kind.RANGE: [0, int(substr[2])]}
+        d = {'value': substr[0:increment + 1], 'type': 0,
+             'kind': Kind.RANGE, Kind.RANGE: [0, int(substr[2])]}
     elif m4.is_matched():
         d = {'value': substr[0:increment + 1], 'type': 0, 'kind': Kind.RANGE,
              Kind.RANGE: [int(substr[1]), int(substr[3])]}

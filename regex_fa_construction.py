@@ -1,11 +1,11 @@
+from common import empty_chars, Kind, element_type, arg_type
+from discrete_event import DiscreteEvent, Node, source_event
 import logging
 from typing import Optional, Iterable
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
-
-from discrete_event import DiscreteEvent, Node, source_event
-from common import empty_chars, Kind, element_type, arg_type
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(filename)s[line:%(lineno)d] - %(levelname)s: %(message)s')
 
 
 class RegexFaConstruction:
@@ -36,7 +36,9 @@ class RegexFaConstruction:
         """ Find the input node of NFA """
         for node in self.m.nodes:
             if self.input_port in node.inputs:
-                logging.info('NFA {} gets its input node: {}'.format(self.name, node))
+                logging.info(
+                    'NFA {} gets its input node: {}'.format(
+                        self.name, node))
                 return node
         return None
 
@@ -47,13 +49,17 @@ class RegexFaConstruction:
             if self.input_port in node.inputs:
                 node.inputs.pop(self.input_port)
                 node.inputs[new_name] = latency
-                logging.info('NFA {} rename the input port of its input node to {}'.format(self.name, new_name))
+                logging.info(
+                    'NFA {} rename the input port of its input node to {}'.format(
+                        self.name, new_name))
 
     def get_output_node(self) -> Optional[Node]:
         """ Find the output node of NFA """
         for node in self.m.nodes:
             if self.output_port in node.outputs:
-                logging.info('NFA {} gets its output node: {}'.format(self.name, node))
+                logging.info(
+                    'NFA {} gets its output node: {}'.format(
+                        self.name, node))
                 return node
         return None
 
@@ -64,15 +70,18 @@ class RegexFaConstruction:
             if self.output_port in node.outputs:
                 node.outputs.pop(self.output_port)
                 node.outputs[new_name] = latency
-                logging.info('NFA {} rename the input port of its input node to {}'.format(self.name, new_name))
+                logging.info(
+                    'NFA {} rename the input port of its input node to {}'.format(
+                        self.name, new_name))
 
     @arg_type([1, 2], [str, str])
     def add_da_node(self, a: str, b: str, c: str = None) -> None:
         """ Add nodes that recognize letters, numbers, and underscores.
-        Corresponding to the regular expression of '\w' """
+        Corresponding to the regular expression of '\\w' """
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             if text[0].isdigit() or text[0].isalpha() or text[0] == '_':
                 return text[1:] if len(text) else ''
             else:
@@ -83,17 +92,22 @@ class RegexFaConstruction:
         n.output(b, latency=1)
         if c is not None:
             n.output(c, latency=1)
-            logging.info(r'NFA {} adds a "\w" node. input port: {} output port: {}, {}'.format(self.name, a, b, c))
+            logging.info(
+                r'NFA {} adds a "\w" node. input port: {} output port: {}, {}'.format(
+                    self.name, a, b, c))
         else:
-            logging.info(r'NFA {} adds a "\w" node. input port: {} output port: {}'.format(self.name, a, b))
+            logging.info(
+                r'NFA {} adds a "\w" node. input port: {} output port: {}'.format(
+                    self.name, a, b))
 
     @arg_type([1, 2], [str, str])
     def add_empty_char_node(self, a: str, b: str, c: str = None) -> None:
         """ Add nodes that recognize '\n', '\t', '\r' and '\f'.
-        Corresponding to the regular expression of '\s' """
+        Corresponding to the regular expression of '\\s' """
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             if text[0] in empty_chars:
                 return text[1:] if len(text) else ''
             else:
@@ -104,17 +118,22 @@ class RegexFaConstruction:
         n.output(b, latency=1)
         if c is not None:
             n.output(c, latency=1)
-            logging.info(r'NFA {} adds a "\s" node. input port: {} output port: {}, {}'.format(self.name, a, b, c))
+            logging.info(
+                r'NFA {} adds a "\s" node. input port: {} output port: {}, {}'.format(
+                    self.name, a, b, c))
         else:
-            logging.info(r'NFA {} adds a "\s" node. input port: {} output port: {}'.format(self.name, a, b))
+            logging.info(
+                r'NFA {} adds a "\s" node. input port: {} output port: {}'.format(
+                    self.name, a, b))
 
     @arg_type([1, 2], [str, str])
     def add_digit_node(self, a: str, b: str, c: str = None) -> None:
         """ Add nodes that recognize numbers.
-        Corresponding to the regular expression of '\d' """
+        Corresponding to the regular expression of '\\d' """
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             if text[0].isdigit():
                 return text[1:] if len(text) else ''
             else:
@@ -125,16 +144,21 @@ class RegexFaConstruction:
         n.output(b, latency=1)
         if c is not None:
             n.output(c, latency=1)
-            logging.info(r'NFA {} adds a "\d" node. input port: {} output port: {}, {}'.format(self.name, a, b, c))
+            logging.info(
+                r'NFA {} adds a "\d" node. input port: {} output port: {}, {}'.format(
+                    self.name, a, b, c))
         else:
-            logging.info(r'NFA {} adds a "\d" node. input port: {} output port: {}'.format(self.name, a, b))
+            logging.info(
+                r'NFA {} adds a "\d" node. input port: {} output port: {}'.format(
+                    self.name, a, b))
 
     @arg_type([1, 2], [str, str])
     def add_alpha_node(self, a: str, b: str, c: str = None) -> None:
         """ Add nodes that recognize letters. """
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             if text[0].isalpha():
                 return text[1:] if len(text) else ''
             else:
@@ -145,9 +169,13 @@ class RegexFaConstruction:
         n.output(b, latency=1)
         if c is not None:
             n.output(c, latency=1)
-            logging.info(r'NFA {} adds an "alpha" node. input port: {} output port: {}, {}'.format(self.name, a, b, c))
+            logging.info(
+                r'NFA {} adds an "alpha" node. input port: {} output port: {}, {}'.format(
+                    self.name, a, b, c))
         else:
-            logging.info(r'NFA {} adds an "alpha" node. input port: {} output port: {}'.format(self.name, a, b))
+            logging.info(
+                r'NFA {} adds an "alpha" node. input port: {} output port: {}'.format(
+                    self.name, a, b))
 
     @arg_type([1, 2], [str, str])
     def add_any_node(self, a: str, b: str, c: str = None) -> None:
@@ -155,7 +183,8 @@ class RegexFaConstruction:
         Corresponding to the regular expression of '.' """
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             if text[0] != '\n':
                 return text[1:] if len(text) else ''
             else:
@@ -166,18 +195,29 @@ class RegexFaConstruction:
         n.output(b, latency=1)
         if c is not None:
             n.output(c, latency=1)
-            logging.info(r'NFA {} adds a "." node. input port: {} output port: {}, {}'.format(self.name, a, b, c))
+            logging.info(
+                r'NFA {} adds a "." node. input port: {} output port: {}, {}'.format(
+                    self.name, a, b, c))
         else:
-            logging.info(r'NFA {} adds a "." node. input port: {} output port: {}'.format(self.name, a, b))
+            logging.info(
+                r'NFA {} adds a "." node. input port: {} output port: {}'.format(
+                    self.name, a, b))
 
     @arg_type([1, 2], [str, str])
-    def add_normal_node(self, a: str, b: str, pattern_char: str, c: str = None) -> None:
+    def add_normal_node(
+        self,
+        a: str,
+        b: str,
+        pattern_char: str,
+            c: str = None) -> None:
         """ Add a node that can recognize the specified character """
 
-        if len(pattern_char) > 1: pattern_char = pattern_char[0]
+        if len(pattern_char) > 1:
+            pattern_char = pattern_char[0]
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             if text[0] == pattern_char:
                 return text[1:] if len(text) else ''
             else:
@@ -189,46 +229,60 @@ class RegexFaConstruction:
         if c is not None:
             n.output(c, latency=1)
             logging.info(
-                r'NFA {} adds a "normal" node. pattern char: {} input port: {} output port: {}, {}'.format(self.name,
-                                                                                                           pattern_char,
-                                                                                                           a, b, c))
+                r'NFA {} adds a "normal" node. pattern char: {} input port: {} output port: {}, {}'.format(
+                    self.name, pattern_char, a, b, c))
         else:
             logging.info(
-                r'NFA {} adds a "normal" node. pattern char: {} input port: {} output port: {}'.format(self.name,
-                                                                                                       pattern_char, a,
-                                                                                                       b))
+                r'NFA {} adds a "normal" node. pattern char: {} input port: {} output port: {}'.format(
+                    self.name, pattern_char, a, b))
 
     @arg_type([1, 2], [str, str])
-    def add_charset_node(self, a: str, b: str, charset: list, negative: bool, c: str = None) -> None:
+    def add_charset_node(
+        self,
+        a: str,
+        b: str,
+        charset: list,
+        negative: bool,
+            c: str = None) -> None:
         """ Adds a node that recognizes the specified character set.
          Corresponding to the regular expression of '[]' """
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             for token in charset:
                 if token.get('type') == Kind.NORMAL:
                     if token.get('value') == text[0]:
-                        return (text[1:] if len(text) else '') if not negative else None
+                        return (text[1:] if len(text)
+                                else '') if not negative else None
                 elif token.get('type') == Kind.TRANS:
                     if token.get('value') == 'w':
-                        if text[0].isalpha() or text[0].isdigit() or text[0] == '_':
-                            return (text[1:] if len(text) else '') if not negative else None
+                        if text[0].isalpha() or text[0].isdigit(
+                        ) or text[0] == '_':
+                            return (text[1:] if len(text)
+                                    else '') if not negative else None
                     elif token.get('value') == 's':
                         if text[0] in empty_chars:
-                            return (text[1:] if len(text) else '') if not negative else None
+                            return (text[1:] if len(text)
+                                    else '') if not negative else None
                     else:
                         if text[0].isdigit():
-                            return (text[1:] if len(text) else '') if not negative else None
+                            return (text[1:] if len(text)
+                                    else '') if not negative else None
                 elif token.get('type') == Kind.ALPHA_RANGE:
-                    if not text[0].isalpha(): continue
+                    if not text[0].isalpha():
+                        continue
                     l, r = token.get(Kind.RANGE)[0], token.get(Kind.RANGE)[1]
                     if l <= text[0] <= r:
-                        return (text[1:] if len(text) else '') if not negative else None
+                        return (text[1:] if len(text)
+                                else '') if not negative else None
                 else:
-                    if not text[0].isdigit(): continue
+                    if not text[0].isdigit():
+                        continue
                     l, r = token.get(Kind.RANGE)[0], token.get(Kind.RANGE)[1]
                     if l <= int(text[0]) <= r:
-                        return (text[1:] if len(text) else '') if not negative else None
+                        return (text[1:] if len(text)
+                                else '') if not negative else None
             return (text[1:] if len(text) else '') if negative else None
 
         node_name = Kind.SET if not negative else Kind.NEG_SET
@@ -238,13 +292,16 @@ class RegexFaConstruction:
         if c is not None:
             n.output(c, latency=1)
             logging.info(
-                r'NFA {} adds a "charset" node. pattern char: {} input port: {} output port: {}, {}'.format(self.name,
-                                                                                                            charset, a,
-                                                                                                            b, c))
+                r'NFA {} adds a "charset" node. pattern char: {} input port: {} output port: {}, {}'.format(
+                    self.name,
+                    charset,
+                    a,
+                    b,
+                    c))
         else:
             logging.info(
-                r'NFA {} adds a "charset" node. pattern char: {} input port: {} output port: {}'.format(self.name,
-                                                                                                        charset, a, b))
+                r'NFA {} adds a "charset" node. pattern char: {} input port: {} output port: {}'.format(
+                    self.name, charset, a, b))
 
     @arg_type([1, 2], [str, str])
     def add_end_node(self, a: str, b: str) -> None:
@@ -256,14 +313,17 @@ class RegexFaConstruction:
         n = self.m.add_node('end', lambda text: function(text))
         n.input(a, latency=1)
         n.output(b, latency=1)
-        logging.info(r'NFA {} adds an "end" node. input port: {} output port: {}'.format(self.name, a, b))
+        logging.info(
+            r'NFA {} adds an "end" node. input port: {} output port: {}'.format(
+                self.name, a, b))
 
     @arg_type([1, 2], [str, str])
     def add_all_node(self, a: str, b: str, c: str = None) -> None:
         """ Add a node that can recognize any input. """
 
         def function(text: Optional[str]) -> Optional[str]:
-            if text is None or len(text) < 1: return None
+            if text is None or len(text) < 1:
+                return None
             return text[1:] if len(text) else ''
 
         n = self.m.add_node('all', lambda text: function(text))
@@ -271,9 +331,13 @@ class RegexFaConstruction:
         n.output(b, latency=1)
         if c is not None:
             n.output(c, latency=1)
-            logging.info(r'NFA {} adds an "all" node. input port: {} output port: {}, {}'.format(self.name, a, b, c))
+            logging.info(
+                r'NFA {} adds an "all" node. input port: {} output port: {}, {}'.format(
+                    self.name, a, b, c))
         else:
-            logging.info(r'NFA {} adds an "all" node. input port: {} output port: {}'.format(self.name, a, b))
+            logging.info(
+                r'NFA {} adds an "all" node. input port: {} output port: {}'.format(
+                    self.name, a, b))
 
     @arg_type([1, 2], [str, str])
     def add_null_11_node(self, a: str, b: str) -> None:
@@ -285,7 +349,9 @@ class RegexFaConstruction:
         n = self.m.add_node('null_11', lambda text: function(text))
         n.input(a, latency=1)
         n.output(b, latency=1)
-        logging.info(r'NFA {} adds a "null" node. input port: {} output port: {}'.format(self.name, a, b))
+        logging.info(
+            r'NFA {} adds a "null" node. input port: {} output port: {}'.format(
+                self.name, a, b))
 
     @arg_type([1, 2, 3], [str, str, str])
     def add_null_12_node(self, a: str, b: str, c: str) -> None:
@@ -298,7 +364,9 @@ class RegexFaConstruction:
         n.input(a, latency=1)
         n.output(b, latency=1)
         n.output(c, latency=1)
-        logging.info(r'NFA {} adds a "null" node. input port: {} output port: {}, {}'.format(self.name, a, b, c))
+        logging.info(
+            r'NFA {} adds a "null" node. input port: {} output port: {}, {}'.format(
+                self.name, a, b, c))
 
     @arg_type([1, 2, 3], [str, str, str])
     def add_null_21_node(self, a: str, b: str, c: str) -> None:
@@ -311,7 +379,9 @@ class RegexFaConstruction:
         n.input(a, latency=1)
         n.input(b, latency=1)
         n.output(c, latency=1)
-        logging.info(r'NFA {} adds a "null" node. input port: {}, {} output port: {}'.format(self.name, a, b, c))
+        logging.info(
+            r'NFA {} adds a "null" node. input port: {}, {} output port: {}'.format(
+                self.name, a, b, c))
 
     @arg_type(1, str)
     def execute(self, text: str) -> None:

@@ -17,12 +17,19 @@ def regex_to_nfa(regex: str) -> RegexFaConstruction:
         if token.get('type') == 1:
             f = RegexFaConstruction()
             if token.get('kind') == Kind.NORMAL:
-                f.add_normal_node(f.input_port, f.output_port, pattern_char=token.get('value'))
+                f.add_normal_node(
+                    f.input_port,
+                    f.output_port,
+                    pattern_char=token.get('value'))
             else:
                 if token.get('kind') == Kind.SET:
-                    f.add_charset_node(f.input_port, f.output_port, charset=token.get(Kind.SET), negative=False)
+                    f.add_charset_node(
+                        f.input_port, f.output_port, charset=token.get(
+                            Kind.SET), negative=False)
                 elif token.get('kind') == Kind.NEG_SET:
-                    f.add_charset_node(f.input_port, f.output_port, charset=token.get(Kind.SET), negative=True)
+                    f.add_charset_node(
+                        f.input_port, f.output_port, charset=token.get(
+                            Kind.SET), negative=True)
                 elif token.get('kind') == Kind.TRANS:
                     if token.get('value') == 'w':
                         f.add_da_node(f.input_port, f.output_port)
@@ -53,7 +60,8 @@ def regex_to_nfa(regex: str) -> RegexFaConstruction:
                     if r[0] == r[1]:
                         new_f = nodes_repeat_eq(f, r[0])
                     else:
-                        new_f, inc = nodes_repeat_range(f, node_index, r[0], r[1])
+                        new_f, inc = nodes_repeat_range(
+                            f, node_index, r[0], r[1])
                     nfa_stack.append(new_f)
             elif is_prefix(token) or is_postfix(token):
                 while len(op_stack) > 0 and not is_left_bracket(op_stack[-1]):
@@ -127,7 +135,8 @@ def regex_to_nfa(regex: str) -> RegexFaConstruction:
 
 
 @arg_type([0, 1], [RegexFaConstruction, int])
-def nodes_repeat_ge_zero(nfa: RegexFaConstruction, node_index: int) -> Tuple[RegexFaConstruction, int]:
+def nodes_repeat_ge_zero(nfa: RegexFaConstruction,
+                         node_index: int) -> Tuple[RegexFaConstruction, int]:
     """ Repeated operation, the number of repetitions is greater than or equal to 0.
      Corresponding to '*' function """
     if not nfa.get_node_list():
@@ -136,14 +145,17 @@ def nodes_repeat_ge_zero(nfa: RegexFaConstruction, node_index: int) -> Tuple[Reg
     nfa.set_output_node(str(node_index + 3))
     nfa.add_null_12_node(nfa.input_port, str(node_index), str(node_index + 1))
     nfa.add_null_11_node(str(node_index + 1), nfa.output_port)
-    nfa.add_null_21_node(str(node_index), str(node_index + 4), str(node_index + 2))
-    nfa.add_null_12_node(str(node_index + 3), str(node_index + 4), nfa.output_port)
+    nfa.add_null_21_node(str(node_index), str(
+        node_index + 4), str(node_index + 2))
+    nfa.add_null_12_node(str(node_index + 3),
+                         str(node_index + 4), nfa.output_port)
     node_inc = 5
     return nfa, node_inc
 
 
 @arg_type([0, 1], [RegexFaConstruction, int])
-def nodes_repeat_ge_one(nfa: RegexFaConstruction, node_index: int) -> Tuple[RegexFaConstruction, int]:
+def nodes_repeat_ge_one(nfa: RegexFaConstruction,
+                        node_index: int) -> Tuple[RegexFaConstruction, int]:
     """ Repeated operation, the number of repetitions is greater than or equal to 1.
      Corresponding to '+' function """
     if not nfa.get_node_list():
@@ -151,14 +163,18 @@ def nodes_repeat_ge_one(nfa: RegexFaConstruction, node_index: int) -> Tuple[Rege
     nfa.set_input_node(str(node_index + 1))
     nfa.set_output_node(str(node_index + 2))
     nfa.add_null_11_node(nfa.input_port, str(node_index))
-    nfa.add_null_21_node(str(node_index), str(node_index + 3), str(node_index + 1))
-    nfa.add_null_12_node(str(node_index + 2), str(node_index + 3), nfa.output_port)
+    nfa.add_null_21_node(str(node_index), str(
+        node_index + 3), str(node_index + 1))
+    nfa.add_null_12_node(str(node_index + 2),
+                         str(node_index + 3), nfa.output_port)
     node_inc = 4
     return nfa, node_inc
 
 
 @arg_type([0, 1], [RegexFaConstruction, int])
-def nodes_repeat_eq(nfa: RegexFaConstruction, times: int) -> RegexFaConstruction:
+def nodes_repeat_eq(
+        nfa: RegexFaConstruction,
+        times: int) -> RegexFaConstruction:
     """ Repeated operation, the times of repetition is equal to a specified number.
      Corresponding to '{n}' function """
     if not nfa.get_node_list():
@@ -168,7 +184,11 @@ def nodes_repeat_eq(nfa: RegexFaConstruction, times: int) -> RegexFaConstruction
 
 
 @arg_type([0, 1, 2, 3], [RegexFaConstruction, int, int, int])
-def nodes_repeat_range(nfa: RegexFaConstruction, node_index: int, gt: int, lt: int) -> Tuple[RegexFaConstruction, int]:
+def nodes_repeat_range(nfa: RegexFaConstruction,
+                       node_index: int,
+                       gt: int,
+                       lt: int) -> Tuple[RegexFaConstruction,
+                                         int]:
     """ Repeated operation, the number of repetitions is in a specified range.
      Corresponding to '{m,n}' function """
     if not nfa.get_node_list():
@@ -176,9 +196,12 @@ def nodes_repeat_range(nfa: RegexFaConstruction, node_index: int, gt: int, lt: i
     f1 = repeat_nfa(nfa, gt)
     if lt == -1:
         f1.set_output_node(str(node_index))
-        f1.add_null_12_node(str(node_index), str(node_index + 1), str(node_index + 2))
-        f1.add_null_21_node(str(node_index + 1), str(node_index + 5), str(node_index + 3))
-        f1.add_null_12_node(str(node_index + 4), str(node_index + 5), nfa.output_port)
+        f1.add_null_12_node(str(node_index), str(
+            node_index + 1), str(node_index + 2))
+        f1.add_null_21_node(str(node_index + 1),
+                            str(node_index + 5), str(node_index + 3))
+        f1.add_null_12_node(str(node_index + 4),
+                            str(node_index + 5), nfa.output_port)
         f1.add_null_11_node(str(node_index + 2), nfa.output_port)
         nfa.set_input_node(str(node_index + 3))
         nfa.set_output_node(str(node_index + 4))
@@ -192,7 +215,8 @@ def nodes_repeat_range(nfa: RegexFaConstruction, node_index: int, gt: int, lt: i
 
 
 @arg_type([0, 1], [RegexFaConstruction, int])
-def nodes_prefix(nfa: RegexFaConstruction, node_index: int) -> Tuple[RegexFaConstruction, int]:
+def nodes_prefix(nfa: RegexFaConstruction,
+                 node_index: int) -> Tuple[RegexFaConstruction, int]:
     """ Operation of matching header. Corresponding to '^' function """
     if not nfa.get_node_list():
         raise ValueError('There is no node in nfa')
@@ -203,7 +227,8 @@ def nodes_prefix(nfa: RegexFaConstruction, node_index: int) -> Tuple[RegexFaCons
 
 
 @arg_type([0, 1], [RegexFaConstruction, int])
-def nodes_postfix(nfa: RegexFaConstruction, node_index: int) -> Tuple[RegexFaConstruction, int]:
+def nodes_postfix(nfa: RegexFaConstruction,
+                  node_index: int) -> Tuple[RegexFaConstruction, int]:
     """ Operation of matching tail. Corresponding to '^' function """
     if not nfa.get_node_list():
         raise ValueError('There is no node in nfa')
@@ -214,7 +239,10 @@ def nodes_postfix(nfa: RegexFaConstruction, node_index: int) -> Tuple[RegexFaCon
 
 
 @arg_type([0, 1, 2], [RegexFaConstruction, RegexFaConstruction, str])
-def concat_nfa(nfa1: RegexFaConstruction, nfa2: RegexFaConstruction, node_index: str) -> RegexFaConstruction:
+def concat_nfa(
+        nfa1: RegexFaConstruction,
+        nfa2: RegexFaConstruction,
+        node_index: str) -> RegexFaConstruction:
     """ Concat nfa2 to nfa1 """
     nfa1.set_output_node(node_index)
     nfa2.set_input_node(node_index)
@@ -260,7 +288,9 @@ def repeat_nfa(nfa: RegexFaConstruction, times: int) -> RegexFaConstruction:
 
 
 @arg_type([0, 1], [RegexFaConstruction, int])
-def repeat_or_output_nfa(nfa: RegexFaConstruction, times: int) -> RegexFaConstruction:
+def repeat_or_output_nfa(
+        nfa: RegexFaConstruction,
+        times: int) -> RegexFaConstruction:
     """ Repeat and concatenate NFA for a specified number of times.
      An output port is added at the beginning of each repeating unit """
     if not nfa.get_node_list():

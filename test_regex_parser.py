@@ -6,10 +6,18 @@ from regex_parser import *
 class RegexParserTest(unittest.TestCase):
 
     def test_process_trans(self):
-        self.assertEqual(process_trans('$'), {'value': '$', 'type': 1, 'kind': Kind.NORMAL})
-        self.assertEqual(process_trans('w'), {'value': 'w', 'type': 1, 'kind': Kind.TRANS})
-        self.assertEqual(process_trans('s'), {'value': 's', 'type': 1, 'kind': Kind.TRANS})
-        self.assertEqual(process_trans('d'), {'value': 'd', 'type': 1, 'kind': Kind.TRANS})
+        self.assertEqual(
+            process_trans('$'), {
+                'value': '$', 'type': 1, 'kind': Kind.NORMAL})
+        self.assertEqual(
+            process_trans('w'), {
+                'value': 'w', 'type': 1, 'kind': Kind.TRANS})
+        self.assertEqual(
+            process_trans('s'), {
+                'value': 's', 'type': 1, 'kind': Kind.TRANS})
+        self.assertEqual(
+            process_trans('d'), {
+                'value': 'd', 'type': 1, 'kind': Kind.TRANS})
 
     def test_process_set(self):
         inc, d = process_set(r'[a-z\w0-9]')
@@ -21,13 +29,17 @@ class RegexParserTest(unittest.TestCase):
 
     def test_process_range(self):
         inc, d = process_range('{5}')
-        self.assertEqual(d, {'value': '{5}', 'type': 0, 'kind': 'range', 'range': [5, 5]})
+        self.assertEqual(d, {'value': '{5}', 'type': 0,
+                         'kind': 'range', 'range': [5, 5]})
         inc, d = process_range('{3,}')
-        self.assertEqual(d, {'value': '{3,}', 'type': 0, 'kind': 'range', 'range': [3, -1]})
+        self.assertEqual(d, {'value': '{3,}', 'type': 0,
+                         'kind': 'range', 'range': [3, -1]})
         inc, d = process_range('{3,5}')
-        self.assertEqual(d, {'value': '{3,5}', 'type': 0, 'kind': 'range', 'range': [3, 5]})
+        self.assertEqual(d, {'value': '{3,5}', 'type': 0,
+                         'kind': 'range', 'range': [3, 5]})
         inc, d = process_range('{,5}')
-        self.assertEqual(d, {'value': '{,5}', 'type': 0, 'kind': 'range', 'range': [0, 5]})
+        self.assertEqual(d, {'value': '{,5}', 'type': 0,
+                         'kind': 'range', 'range': [0, 5]})
         self.assertRaises(TypeError, lambda: process_range(None))
 
     def test_charset_parser(self):
