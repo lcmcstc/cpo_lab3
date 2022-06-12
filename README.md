@@ -82,12 +82,11 @@ self.assertEqual(split(regex, text, 1), ['', '，wxx，wxx，wxx，wxx'])
 - 12.06.2022
   - fixed bug
 - 11.06.2022
-  - Update Readme.md 
+  - Update Readme.md
 - 10.06.2022
   - Create Readme.md
 - 06.06.2022
   - Initial commit
-
 
 ## Conclusion
 
