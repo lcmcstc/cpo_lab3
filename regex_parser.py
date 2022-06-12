@@ -180,8 +180,8 @@ def charset_parser(charset: str) -> list:
             dig_nfa.execute(charset[i:i + 3])
             if dig_nfa.is_matched():
                 d = {'type': 'digit_' + Kind.RANGE,
-                     Kind.RANGE: [int(charset[i]),
-                                  int(charset[i + 2])]}  # type: ignore
+                     Kind.RANGE:
+                         [int(charset[i]), int(charset[i + 2])]}  # type: ignore
                 i += 2
         else:
             d = {'type': Kind.NORMAL, 'value': charset[i]}
