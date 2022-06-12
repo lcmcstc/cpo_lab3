@@ -137,7 +137,8 @@ def regex_to_nfa(regex: str) -> RegexFaConstruction:
 @arg_type([0, 1], [RegexFaConstruction, int])
 def nodes_repeat_ge_zero(nfa: RegexFaConstruction,
                          node_index: int) -> Tuple[RegexFaConstruction, int]:
-    """ Repeated operation, the number of repetitions is greater than or equal to 0.
+    """ Repeated operation, the number of
+    repetitions is greater than or equal to 0.
      Corresponding to '*' function """
     if not nfa.get_node_list():
         raise ValueError('There is no node in nfa')
@@ -156,7 +157,8 @@ def nodes_repeat_ge_zero(nfa: RegexFaConstruction,
 @arg_type([0, 1], [RegexFaConstruction, int])
 def nodes_repeat_ge_one(nfa: RegexFaConstruction,
                         node_index: int) -> Tuple[RegexFaConstruction, int]:
-    """ Repeated operation, the number of repetitions is greater than or equal to 1.
+    """ Repeated operation, the number
+     repetitions is greater than or equal to 1.
      Corresponding to '+' function """
     if not nfa.get_node_list():
         raise ValueError('There is no node in nfa')
@@ -175,7 +177,8 @@ def nodes_repeat_ge_one(nfa: RegexFaConstruction,
 def nodes_repeat_eq(
         nfa: RegexFaConstruction,
         times: int) -> RegexFaConstruction:
-    """ Repeated operation, the times of repetition is equal to a specified number.
+    """ Repeated operation, the times of
+    repetition is equal to a specified number.
      Corresponding to '{n}' function """
     if not nfa.get_node_list():
         raise ValueError('There is no node in nfa')
