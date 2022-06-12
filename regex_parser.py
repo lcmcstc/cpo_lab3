@@ -167,7 +167,7 @@ def charset_parser(charset: str) -> list:
                 d = {'type': Kind.TRANS, 'value': charset[i + 1]}
                 i += 1
         elif charset[i].isalpha() \
-                and i + 2 < len(charset)\
+                and i + 2 < len(charset) \
                 and charset[i + 1] == '-':
             alp_nfa.execute(charset[i:i + 3])
             if alp_nfa.is_matched():
@@ -179,9 +179,10 @@ def charset_parser(charset: str) -> list:
                 and charset[i + 1] == '-':
             dig_nfa.execute(charset[i:i + 3])
             if dig_nfa.is_matched():
+                t1 = int(charset[i])
+                t2 = int(charset[i + 2])
                 d = {'type': 'digit_' + Kind.RANGE,
-                     Kind.RANGE:
-                         [int(charset[i]), int(charset[i + 2])]}  # type: ignore
+                     Kind.RANGE: [t1, t2]}  # type: ignore
                 i += 2
         else:
             d = {'type': Kind.NORMAL, 'value': charset[i]}
