@@ -97,8 +97,8 @@ class RegexFaConstruction:
             n.output(c, latency=1)
             logging.info(
                 r'NFA {} adds a "\w" node. input port:'
-                + ' {} output port: {}, {}'.format(
-                    self.name, a, b, c))
+                ' {} output port: {}, {}'
+                .format(self.name, a, b, c))
         else:
             logging.info(
                 r'NFA {} adds a "\w" node. '
