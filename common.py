@@ -37,6 +37,7 @@ def arg_type(arg_index: Union[int, list], arg_type):
                 raise TypeError(
                     'The type of argument {} is not {}'.format(
                         arg, tp))
+
         return traced
 
     return trace
@@ -63,7 +64,8 @@ def element_type(arg_index: int, elem_type):
             for elem in args[arg_index]:
                 if not isinstance(elem, elem_type):
                     raise TypeError(
-                        'The type of element in list must be {} type'.format(elem_type))
+                        'The type of element in list must be {} type'
+                        .format(elem_type))
 
             return f(*args, **kwargs)
 
