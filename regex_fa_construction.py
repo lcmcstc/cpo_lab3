@@ -89,7 +89,6 @@ class RegexFaConstruction:
                 return text[1:] if len(text) else ''
             else:
                 return None
-
         n = self.m.add_node('digit_alpha', lambda text: function(text))
         n.input(a, latency=1)
         n.output(b, latency=1)
